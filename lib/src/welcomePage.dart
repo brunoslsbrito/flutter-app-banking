@@ -69,7 +69,7 @@ class _WelcomePageState extends State<WelcomePage> {
         child: Column(
           children: <Widget>[
             Text(
-              'Quick login with Touch ID',
+              'Login rápido usando Touch ID',
               style: TextStyle(color: Colors.white, fontSize: 17),
             ),
             SizedBox(
