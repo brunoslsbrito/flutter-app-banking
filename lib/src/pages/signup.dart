@@ -1,5 +1,5 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
-import 'package:flexpay/src/loginPage.dart';
+import 'package:flexpay/src/pages/loginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -26,7 +26,7 @@ class _SignUpPageState extends State<SignUpPage> {
               padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
               child: Icon(Icons.keyboard_arrow_left, color: Colors.black),
             ),
-            Text('Back',
+            Text('Voltar',
                 style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500))
           ],
         ),

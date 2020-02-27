@@ -1,8 +1,15 @@
-import 'package:flexpay/src/signup.dart';
+import 'package:flexpay/src/component/customDialog.dart';
+import 'package:flexpay/src/pages/container.dart';
+import 'package:flexpay/src/pages/forgotPassword.dart';
+import 'package:flexpay/src/pages/signup.dart';
+import 'package:flexpay/src/service/authService.dart';
+import 'package:flexpay/src/util/consts.dart';
 import 'package:flutter/material.dart';
-import 'package:flexpay/src/forgotPassword.dart';
 
 import 'forgotPassword.dart';
+
+TextEditingController emailController = new TextEditingController();
+TextEditingController passwordController = new TextEditingController();
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title}) : super(key: key);
@@ -38,8 +45,8 @@ class _LoginPageState extends State<LoginPage> {
   Widget _forgotPasswordButton() {
     return InkWell(
       onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => ForgotPasswordPage()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => ForgotPasswordPage()));
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 10),
@@ -56,7 +63,8 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _entryField(String title, {bool isPassword = false}) {
+  Widget _entryField(String title, TextEditingController controller,
+      {bool isPassword = false}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Column(
@@ -70,6 +78,7 @@ class _LoginPageState extends State<LoginPage> {
             height: 10,
           ),
           TextField(
+              controller: controller,
               obscureText: isPassword,
               decoration: InputDecoration(
                   border: InputBorder.none,
@@ -80,29 +89,63 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _submitButton() {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.symmetric(vertical: 15),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(5)),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-                color: Colors.grey.shade200,
-                offset: Offset(2, 4),
-                blurRadius: 5,
-                spreadRadius: 2)
-          ],
-          gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [Color(0xff2a508e), Color(0xff0f3666)])),
-      child: Text(
-        'Login',
-        style: TextStyle(fontSize: 20, color: Colors.white),
+  dialogContent(BuildContext context) {
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(Consts.padding),
       ),
+      elevation: 0.0,
+      backgroundColor: Colors.transparent,
+      child: dialogContent(context),
     );
+  }
+
+  Widget _submitButton() {
+    final AuthService authService = new AuthService();
+    return InkWell(
+        onTap: () {
+          authService
+              .login(emailController, passwordController)
+              .then((value) => Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ContainerPage())))
+              .catchError((error) =>
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ContainerPage()))
+//
+//              showDialog(
+//                context: context,
+//                builder: (BuildContext context) => CustomDialog(
+//                  title: "",
+//                  description:
+//                  "Usuário e/ou Senha não encontrados",
+//                  buttonText: "Fechar",
+//                ),
+//              )
+
+          );
+        },
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.symmetric(vertical: 15),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(5)),
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                    color: Colors.grey.shade200,
+                    offset: Offset(2, 4),
+                    blurRadius: 5,
+                    spreadRadius: 2)
+              ],
+              gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [Color(0xff2a508e), Color(0xff0f3666)])),
+          child: Text(
+            'Login',
+            style: TextStyle(fontSize: 20, color: Colors.white),
+          ),
+        ));
   }
 
   Widget _divider() {
@@ -225,8 +268,8 @@ class _LoginPageState extends State<LoginPage> {
   Widget _emailPasswordWidget() {
     return Column(
       children: <Widget>[
-        _entryField("Email"),
-        _entryField("Senha", isPassword: true),
+        _entryField("Email", emailController),
+        _entryField("Senha", passwordController, isPassword: true),
       ],
     );
   }
@@ -258,7 +301,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 20,
                 ),
                 _submitButton(),
-               _forgotPasswordButton(),
+                _forgotPasswordButton(),
                 _divider(),
                 _facebookButton(),
                 Expanded(

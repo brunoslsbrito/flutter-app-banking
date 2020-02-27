@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flexpay/src/loginPage.dart';
-import 'package:flexpay/src/signup.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flexpay/src/pages/loginPage.dart';
+import 'package:flexpay/src/pages/signup.dart';
 
 class WelcomePage extends StatefulWidget {
   WelcomePage({Key key, this.title}) : super(key: key);
