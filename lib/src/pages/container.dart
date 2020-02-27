@@ -1,4 +1,7 @@
 import 'package:barcode_scan/barcode_scan.dart';
+import 'package:flexpay/src/component/customDialog.dart';
+import 'package:flexpay/src/model/bancoRendimento/responseBillInfo.dart';
+import 'package:flexpay/src/service/bancoRendimentoService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -13,18 +16,30 @@ class ContainerPage extends StatefulWidget {
 
 class _ContainerPageState extends State<ContainerPage> {
   String barcode = "";
+  ResponseBillInfo resp;
+
 
   Widget _title() {
     return Image.asset('assets/images/logo.png');
   }
 
   // Method for scanning barcode....
-  Future barcodeScanning() async {
-//imageSelectorGallery();
-
+  Future<ResponseBillInfo> barcodeScanning() async {
     try {
       String barcode = await BarcodeScanner.scan();
       setState(() => this.barcode = barcode);
+      var bancoRendimentoService = new BancoRendimentoService();
+       bancoRendimentoService
+          .loadBillInfos(barcode)
+          .then((value) => resp = value)
+          .catchError((error) => showDialog(
+        context: context,
+        builder: (BuildContext context) => CustomDialog(
+          title: "",
+          description: "Ocorreu um problema ao tentar ler o boleto",
+          buttonText: "Fechar",
+        ),
+      ));
     } on PlatformException catch (e) {
       if (e.code == BarcodeScanner.CameraAccessDenied) {
         setState(() {
@@ -52,6 +67,7 @@ class _ContainerPageState extends State<ContainerPage> {
             subtitle: Text('Pagamento com Código de Barras'),
           ),
           new Text("Barcode Number after Scan : " + barcode),
+          new Text("Motivo : " + resp.value.motivo),
         ],
       ),
     );

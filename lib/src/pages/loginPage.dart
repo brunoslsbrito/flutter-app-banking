@@ -109,18 +109,15 @@ class _LoginPageState extends State<LoginPage> {
               .then((value) => Navigator.push(context,
                   MaterialPageRoute(builder: (context) => ContainerPage())))
               .catchError((error) =>
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ContainerPage()))
-//
-//              showDialog(
-//                context: context,
-//                builder: (BuildContext context) => CustomDialog(
-//                  title: "",
-//                  description:
-//                  "Usuário e/ou Senha não encontrados",
-//                  buttonText: "Fechar",
-//                ),
-//              )
+              showDialog(
+                context: context,
+                builder: (BuildContext context) => CustomDialog(
+                  title: "",
+                  description:
+                  "Usuário e/ou Senha não encontrados",
+                  buttonText: "Fechar",
+                ),
+              )
 
           );
         },
