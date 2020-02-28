@@ -5,6 +5,8 @@ import 'package:flexpay/src/pages/signup.dart';
 import 'package:flexpay/src/service/authService.dart';
 import 'package:flexpay/src/util/consts.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoder/geocoder.dart';
+import 'package:geolocator/geolocator.dart';
 
 import 'forgotPassword.dart';
 
@@ -21,6 +23,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+  var geolocator = Geolocator();
+  var locationOptions = LocationOptions(accuracy: LocationAccuracy.high, distanceFilter: 10);
+
   Widget _backButton() {
     return InkWell(
       onTap: () {
@@ -271,8 +277,22 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  _location() async {
+     Position position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+     print(position.latitude);
+     print(position.longitude);
+     var addresses;
+     // From coordinates
+     final coordinates = new Coordinates(position.latitude, position.longitude);
+     addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
+     var first = addresses.first;
+     first = addresses.first;
+     print("${first.featureName} : ${first.addressLine}");
+  }
+
   @override
   Widget build(BuildContext context) {
+    _location();
     return Scaffold(
         body: SingleChildScrollView(
             child: Container(

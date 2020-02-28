@@ -67,7 +67,7 @@ class _ContainerPageState extends State<ContainerPage> {
             subtitle: Text('Pagamento com Código de Barras'),
           ),
           new Text("Barcode Number after Scan : " + barcode),
-          new Text("Motivo : " + resp.value.motivo),
+//          new Text("Motivo : " + resp?.value?.motivo),
         ],
       ),
     );
