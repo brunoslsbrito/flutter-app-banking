@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flexpay/src/model/user.dart';
+import 'package:FlexPay/src/model/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';

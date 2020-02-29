@@ -1,4 +1,4 @@
-import 'package:flexpay/src/util/consts.dart';
+import 'package:FlexPay/src/util/consts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

@@ -1,9 +1,12 @@
-import 'package:flexpay/src/component/customDialog.dart';
-import 'package:flexpay/src/pages/container.dart';
-import 'package:flexpay/src/pages/forgotPassword.dart';
-import 'package:flexpay/src/pages/signup.dart';
-import 'package:flexpay/src/service/authService.dart';
-import 'package:flexpay/src/util/consts.dart';
+import 'dart:async';
+
+import 'package:FlexPay/src/component/customDialog.dart';
+import 'package:FlexPay/src/pages/container.dart';
+import 'package:FlexPay/src/pages/forgotPassword.dart';
+import 'package:FlexPay/src/pages/signup.dart';
+import 'package:FlexPay/src/service/auth/authentication_state.dart';
+import 'package:FlexPay/src/service/authService.dart';
+import 'package:FlexPay/src/util/consts.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
@@ -15,8 +18,9 @@ TextEditingController passwordController = new TextEditingController();
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title}) : super(key: key);
-
   final String title;
+
+
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -26,6 +30,13 @@ class _LoginPageState extends State<LoginPage> {
   final AuthService authService = new AuthService();
   var geolocator = Geolocator();
   var locationOptions = LocationOptions(accuracy: LocationAccuracy.high, distanceFilter: 10);
+  final StreamController<AuthenticationState> streamController = new StreamController();
+
+  signIn() async {
+    streamController.add(AuthenticationState.authenticated());
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => ContainerPage()));
+  }
 
   Widget _backButton() {
     return InkWell(
@@ -111,10 +122,9 @@ class _LoginPageState extends State<LoginPage> {
         onTap: () {
           authService
               .login(emailController, passwordController)
-              .then((value) => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ContainerPage())))
+              .then((value) => signIn())
               .catchError((error) =>
-              showDialog(
+            showDialog(
                 context: context,
                 builder: (BuildContext context) => CustomDialog(
                   title: "",

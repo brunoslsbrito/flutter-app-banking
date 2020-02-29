@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:barcode_scan/barcode_scan.dart';
-import 'package:flexpay/src/component/customDialog.dart';
-import 'package:flexpay/src/model/bancoRendimento/responseBillInfo.dart';
-import 'package:flexpay/src/pages/loginPage.dart';
-import 'package:flexpay/src/service/bancoRendimentoService.dart';
+import 'package:FlexPay/src/component/customDialog.dart';
+import 'package:FlexPay/src/model/bancoRendimento/responseBillInfo.dart';
+import 'package:FlexPay/src/pages/loginPage.dart';
+import 'package:FlexPay/src/service/auth/authentication_state.dart';
+import 'package:FlexPay/src/service/bancoRendimentoService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -16,6 +19,7 @@ class ContainerPage extends StatefulWidget {
 }
 
 class _ContainerPageState extends State<ContainerPage> {
+  final StreamController<AuthenticationState> streamController = new StreamController();
   String barcode = "";
   ResponseBillInfo resp;
 
@@ -106,11 +110,18 @@ class _ContainerPageState extends State<ContainerPage> {
           leading: Icon(Icons.exit_to_app, color: Color(0xff0f3666)),
           title: Text('Sair'),
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => LoginPage()));
+            signOut();
           }),
     );
   }
+
+  signOut() {
+    streamController.add(AuthenticationState.signedOut());
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => LoginPage()));
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

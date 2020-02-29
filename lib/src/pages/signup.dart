@@ -1,6 +1,6 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
-import 'package:flexpay/src/pages/loginPage.dart';
-import 'package:flexpay/src/service/authService.dart';
+import 'package:FlexPay/src/pages/loginPage.dart';
+import 'package:FlexPay/src/service/authService.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

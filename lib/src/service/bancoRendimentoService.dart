@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flexpay/src/model/bancoRendimento/responseBillInfo.dart';
+import 'package:FlexPay/src/model/bancoRendimento/responseBillInfo.dart';
 import 'package:http/http.dart';
 
 class BancoRendimentoService {

@@ -1,8 +1,10 @@
-import 'package:flexpay/src/pages/loginPage.dart';
-import 'package:flexpay/src/pages/signup.dart';
-import 'package:flexpay/src/service/localAuthenticationService.dart';
+import 'dart:async';
+
+import 'package:FlexPay/src/pages/loginPage.dart';
+import 'package:FlexPay/src/pages/signup.dart';
+import 'package:FlexPay/src/service/auth/authentication_state.dart';
+import 'package:FlexPay/src/service/localAuthenticationService.dart';
 import 'package:flutter/material.dart';
-import 'package:local_auth/local_auth.dart';
 
 class WelcomePage extends StatefulWidget {
   WelcomePage({Key key, this.title}) : super(key: key);
@@ -14,25 +16,17 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage> {
+  final StreamController<AuthenticationState> _streamController =
+  new StreamController<AuthenticationState>();
 
-  final _auth = LocalAuthentication();
-  bool _isProtectionEnabled = false;
-
-  bool get isProtectionEnabled => _isProtectionEnabled;
-
-  set isProtectionEnabled(bool enabled) => _isProtectionEnabled = enabled;
-
-  bool isAuthenticated = false;
-
-  Future<void> authenticate() async {
-    if (_isProtectionEnabled) {
-        isAuthenticated = await _auth.authenticateWithBiometrics(
-          localizedReason: 'authenticate to access',
-          useErrorDialogs: true,
-          stickyAuth: true,
-        );
+  Widget buildUi(BuildContext context, AuthenticationState s) {
+    if (s.authenticated) {
+      return Container();
+    } else {
+      return LoginPage();
     }
   }
+
 
   Widget _submitButton() {
     return InkWell(
@@ -89,7 +83,6 @@ class _WelcomePageState extends State<WelcomePage> {
     return
       GestureDetector(
         onTap: () {
-          authenticate();
           print("Container was tapped"); },
         child: Container(
         margin: EdgeInsets.only(top: 40, bottom: 20),
@@ -122,6 +115,7 @@ class _WelcomePageState extends State<WelcomePage> {
   Widget _title() {
     return Image.asset('assets/images/logo.png');
   }
+
 
   @override
   Widget build(BuildContext context) {

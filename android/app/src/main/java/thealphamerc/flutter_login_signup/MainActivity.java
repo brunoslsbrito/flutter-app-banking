@@ -1,4 +1,4 @@
-package flexpag.flexpay;
+package flexpag.FlexPay;
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity;

@@ -1,4 +1,4 @@
-import 'package:flexpay/src/model/bancoRendimento/value.dart';
+import 'package:FlexPay/src/model/bancoRendimento/value.dart';
 
 import 'erroMessage.dart';
 

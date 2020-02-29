@@ -1,4 +1,5 @@
-import 'package:flexpay/src/service/service_locator.dart';
+import 'package:FlexPay/src/pages/home.dart';
+import 'package:FlexPay/src/service/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return MaterialApp(
-      title: 'Flexpay - Flexpag',
+      title: 'FlexPay - Flexpag',
       theme: ThemeData(
          primarySwatch: Colors.blue,
          textTheme:GoogleFonts.latoTextTheme(textTheme).copyWith(
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
          ),
       ),
       debugShowCheckedModeBanner: false,
-      home: WelcomePage(),
+      home: HomePage(),
     );
   }
 }
