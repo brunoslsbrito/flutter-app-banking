@@ -23,7 +23,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
+  final AuthService authService = new AuthService();
   var geolocator = Geolocator();
   var locationOptions = LocationOptions(accuracy: LocationAccuracy.high, distanceFilter: 10);
 
@@ -107,7 +107,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _submitButton() {
-    final AuthService authService = new AuthService();
     return InkWell(
         onTap: () {
           authService
@@ -292,7 +291,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    _location();
+//    _location();
     return Scaffold(
         body: SingleChildScrollView(
             child: Container(

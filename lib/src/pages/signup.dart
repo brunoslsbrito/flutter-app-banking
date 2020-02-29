@@ -1,5 +1,6 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flexpay/src/pages/loginPage.dart';
+import 'package:flexpay/src/service/authService.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -13,6 +14,12 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  final AuthService authService = new AuthService();
+  TextEditingController emailController = new TextEditingController();
+  TextEditingController nameController = new TextEditingController();
+  TextEditingController passwordController = new TextEditingController();
+  TextEditingController birthController = new TextEditingController();
+
   Widget _backButton() {
     return InkWell(
       onTap: () {
@@ -34,7 +41,8 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  Widget _entryField(String title, {bool isPassword = false}) {
+  Widget _entryField(String title, TextEditingController controller,
+      {bool isPassword = false}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Column(
@@ -48,6 +56,7 @@ class _SignUpPageState extends State<SignUpPage> {
             height: 10,
           ),
           TextField(
+              controller: controller,
               obscureText: isPassword,
               decoration: InputDecoration(
                   border: InputBorder.none,
@@ -57,7 +66,8 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
     );
   }
-  Widget _entryFieldCalendar(String title, {bool isPassword = false}) {
+
+  Widget _entryFieldCalendar(String title, TextEditingController controller, {bool isPassword = false}) {
     final format = DateFormat("dd/MM/yyyy");
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
@@ -72,6 +82,7 @@ class _SignUpPageState extends State<SignUpPage> {
             height: 10,
           ),
           DateTimeField(
+            controller: controller,
             format: format,
             decoration: InputDecoration(
                 border: InputBorder.none,
@@ -90,30 +101,36 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-
   Widget _submitButton() {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.symmetric(vertical: 15),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(5)),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-                color: Colors.grey.shade200,
-                offset: Offset(2, 4),
-                blurRadius: 5,
-                spreadRadius: 2)
-          ],
-          gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [Color(0xff1959a9), Color(0xff0f3666)])),
-      child: Text(
-        'Cadastrar',
-        style: TextStyle(fontSize: 20, color: Colors.white),
-      ),
-    );
+    return GestureDetector(
+        onTap: () {
+          authService.signup(nameController, passwordController, emailController, birthController);
+        },
+        child: Container(
+          width: MediaQuery
+              .of(context)
+              .size
+              .width,
+          padding: EdgeInsets.symmetric(vertical: 15),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(5)),
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                    color: Colors.grey.shade200,
+                    offset: Offset(2, 4),
+                    blurRadius: 5,
+                    spreadRadius: 2)
+              ],
+              gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [Color(0xff1959a9), Color(0xff0f3666)])),
+          child: Text(
+            'Cadastrar',
+            style: TextStyle(fontSize: 20, color: Colors.white),
+          ),
+        ));
   }
 
   Widget _loginAccountLabel() {
@@ -155,10 +172,10 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget _emailPasswordWidget() {
     return Column(
       children: <Widget>[
-        _entryField("Nome Completo"),
-        _entryField("Email"),
-        _entryFieldCalendar("Data de Nascimento"),
-        _entryField("Password", isPassword: true),
+        _entryField("Nome Completo", nameController),
+        _entryField("Email", emailController),
+        _entryFieldCalendar("Data de Nascimento", birthController),
+        _entryField("Password", passwordController, isPassword: true),
       ],
     );
   }
@@ -168,7 +185,10 @@ class _SignUpPageState extends State<SignUpPage> {
     return Scaffold(
         body: SingleChildScrollView(
             child: Container(
-              height: MediaQuery.of(context).size.height,
+              height: MediaQuery
+                  .of(context)
+                  .size
+                  .height,
               child: Stack(
                 children: <Widget>[
                   Container(

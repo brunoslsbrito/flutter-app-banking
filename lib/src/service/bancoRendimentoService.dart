@@ -9,7 +9,7 @@ class BancoRendimentoService {
     Map<String, String> headers = {
       "Content-type": "application/json",
     };
-    final String URL = 'http://10.0.0.169:8889/api/user/login';
+    final String URL = 'http://rendimentoapi.flexpag.com:9997/api/pagamento/info-boleto';
     String body = '{"codigoBarras": "", "linhaDigitavel": "' + barcode +  '","numeroDocumento": "","dataVencimento": ""}';
     Response response = await post(URL, headers: headers, body: body);
 

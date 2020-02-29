@@ -1,6 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:flexpay/src/pages/loginPage.dart';
 import 'package:flexpay/src/pages/signup.dart';
+import 'package:flexpay/src/service/localAuthenticationService.dart';
+import 'package:flutter/material.dart';
+import 'package:local_auth/local_auth.dart';
 
 class WelcomePage extends StatefulWidget {
   WelcomePage({Key key, this.title}) : super(key: key);
@@ -12,6 +14,26 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage> {
+
+  final _auth = LocalAuthentication();
+  bool _isProtectionEnabled = false;
+
+  bool get isProtectionEnabled => _isProtectionEnabled;
+
+  set isProtectionEnabled(bool enabled) => _isProtectionEnabled = enabled;
+
+  bool isAuthenticated = false;
+
+  Future<void> authenticate() async {
+    if (_isProtectionEnabled) {
+        isAuthenticated = await _auth.authenticateWithBiometrics(
+          localizedReason: 'authenticate to access',
+          useErrorDialogs: true,
+          stickyAuth: true,
+        );
+    }
+  }
+
   Widget _submitButton() {
     return InkWell(
       onTap: () {
@@ -63,7 +85,13 @@ class _WelcomePageState extends State<WelcomePage> {
   }
 
   Widget _label() {
-    return Container(
+    LocalAuthenticationService _localAuth = new LocalAuthenticationService();
+    return
+      GestureDetector(
+        onTap: () {
+          authenticate();
+          print("Container was tapped"); },
+        child: Container(
         margin: EdgeInsets.only(top: 40, bottom: 20),
         child: Column(
           children: <Widget>[
@@ -87,7 +115,8 @@ class _WelcomePageState extends State<WelcomePage> {
               ),
             ),
           ],
-        ));
+        ))
+      );
   }
 
   Widget _title() {

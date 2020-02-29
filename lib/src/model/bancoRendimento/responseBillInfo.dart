@@ -17,8 +17,8 @@ class ResponseBillInfo {
 
   factory ResponseBillInfo.fromJson(Map<String, dynamic> json) =>
       ResponseBillInfo(
-        value: Value.fromJson(json["value"]),
-        erroMessage: ErroMessage.fromJson(json["erroMessage"]),
+        value: json['value'] != null ? Value.fromJson(json["value"]) : null,
+        erroMessage: json["erroMessage"] != null ? ErroMessage.fromJson(json["erroMessage"]) : null,
         isSucess: json["isSucess"],
         isFailure: json["isFailure"],
       );

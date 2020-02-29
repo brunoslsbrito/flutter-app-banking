@@ -12,11 +12,10 @@ class AuthService {
       "Authorization":
           "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzeXN0ZW0iLCJ1c2VySWQiOiIxIiwicm9sZSI6IkFETUlOIn0.6sM-QElneAxm4kbexxY3XWj7usWn7hOQ6-6zqYdfk9sZFT1vnVLbFWsZ7U0f_3yjU-dd7fI8N3R5TgFt-GZIMw"
     };
-    final String URL = 'http://10.0.0.169:8889/api/user/login';
+    final String URL = 'https://sistemainterno.maisboleto.com.br:8889/api/user/login';
     String body = '{"login": "' + email.text + '", "password": "' + password.text + '"}';
     Response response = await post(URL, headers: headers, body: body);
 
-    print(response.statusCode);
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response, then parse the JSON.
       var user = User.fromJson(json.decode(response.body));
@@ -26,4 +25,6 @@ class AuthService {
       throw Exception('Ops! Aconteceu algum problema');
     }
   }
+
+  void signup(TextEditingController nameController, TextEditingController passwordController, TextEditingController emailController, TextEditingController birthController) {}
 }

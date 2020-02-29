@@ -2,11 +2,11 @@ class Value {
   String cnpjcpfBeneficiario;
   String cnpjcpfPagador;
   String codigoDeBarras;
-  int desconto;
-  int juros;
+  double desconto;
+  double juros;
   String linhaDigitavel;
   String motivo;
-  int multa;
+  double multa;
   String nomeBeneficiario;
   String nomePagador;
   bool permiteAlterarValorTotal;
@@ -16,8 +16,8 @@ class Value {
   int tipoPagamentoDiverso;
   bool validarDuplicidade;
   double valor;
-  int valorMaximo;
-  int valorMinimo;
+  double valorMaximo;
+  double valorMinimo;
   double valorTotal;
   DateTime dataVencimento;
   DateTime dataLimitePagamento;
@@ -74,7 +74,7 @@ class Value {
         valorMinimo: json["valorMinimo"],
         valorTotal: json["valorTotal"].toDouble(),
         dataVencimento: DateTime.parse(json["dataVencimento"]),
-        dataLimitePagamento: DateTime.parse(json["dataLimitePagamento"]),
+        dataLimitePagamento: json["dataLimitePagamento"] != null ?  DateTime.parse(json["dataLimitePagamento"]) : null,
         habilitaMp: json["habilitaMP"],
         dataHoraConsultaBoleto: DateTime.parse(json["dataHoraConsultaBoleto"]),
       );
