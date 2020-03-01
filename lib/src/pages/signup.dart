@@ -1,6 +1,7 @@
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:FlexPay/src/pages/loginPage.dart';
-import 'package:FlexPay/src/service/authService.dart';
+import 'package:FlexPay/src/service/auth/authService.dart';
+import 'package:FlexPay/src/util/consts.dart';
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -125,7 +126,7 @@ class _SignUpPageState extends State<SignUpPage> {
               gradient: LinearGradient(
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
-                  colors: [Color(0xff1959a9), Color(0xff0f3666)])),
+                  colors: [Color(0xff1959a9), Color(Consts.PRIMARY_BLUE_COLOR)])),
           child: Text(
             'Cadastrar',
             style: TextStyle(fontSize: 20, color: Colors.white),
@@ -155,7 +156,7 @@ class _SignUpPageState extends State<SignUpPage> {
             child: Text(
               'Faça o Login',
               style: TextStyle(
-                  color: Color(0xff0f3666),
+                  color: Color(Consts.PRIMARY_BLUE_COLOR),
                   fontSize: 13,
                   fontWeight: FontWeight.w600),
             ),

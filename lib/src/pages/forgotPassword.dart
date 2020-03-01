@@ -1,3 +1,4 @@
+import 'package:FlexPay/src/util/consts.dart';
 import 'package:flutter/material.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
@@ -73,7 +74,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           gradient: LinearGradient(
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
-              colors: [Color(0xff1959a9), Color(0xff0f3666)])),
+              colors: [Color(0xff1959a9), Color(Consts.PRIMARY_BLUE_COLOR)])),
       child: Text(
         'Enviar',
         style: TextStyle(fontSize: 20, color: Colors.white),

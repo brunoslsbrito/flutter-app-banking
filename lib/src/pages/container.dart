@@ -1,27 +1,26 @@
 import 'dart:async';
 
-import 'package:barcode_scan/barcode_scan.dart';
 import 'package:FlexPay/src/component/customDialog.dart';
 import 'package:FlexPay/src/model/bancoRendimento/responseBillInfo.dart';
 import 'package:FlexPay/src/pages/loginPage.dart';
 import 'package:FlexPay/src/service/auth/authentication_state.dart';
 import 'package:FlexPay/src/service/bancoRendimentoService.dart';
+import 'package:FlexPay/src/util/consts.dart';
+import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class ContainerPage extends StatefulWidget {
-  ContainerPage({Key key, this.title}) : super(key: key);
-
-  final String title;
+  ContainerPage({Key key}) : super(key: key);
 
   @override
   _ContainerPageState createState() => _ContainerPageState();
 }
 
 class _ContainerPageState extends State<ContainerPage> {
-  final StreamController<AuthenticationState> streamController = new StreamController();
+  final StreamController<AuthenticationState> streamController =
+      new StreamController();
   String barcode = "";
-  ResponseBillInfo resp;
 
   Widget _title() {
     return Image.asset('assets/images/logo.png');
@@ -35,7 +34,7 @@ class _ContainerPageState extends State<ContainerPage> {
       var bancoRendimentoService = new BancoRendimentoService();
       bancoRendimentoService
           .loadBillInfos(barcode)
-          .then((value) => resp = value)
+          .then((value) => _bill(value))
           .catchError((error) => showDialog(
                 context: context,
                 builder: (BuildContext context) => CustomDialog(
@@ -59,7 +58,7 @@ class _ContainerPageState extends State<ContainerPage> {
     }
   }
 
-  _cardBarcode() {
+  _barcodeReader() {
     return Card(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -77,6 +76,26 @@ class _ContainerPageState extends State<ContainerPage> {
     );
   }
 
+  _bill(billInfo) {
+    return Card(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          ListTile(
+            leading: Icon(Icons.info, size: 20),
+            title: Text('Boleto'),
+            onTap: barcodeScanning,
+          ),
+          new Text("Cedente: " + billInfo.value.nomeBeneficiario),
+          new Text("Còdigo de Barras: " + billInfo.value.codigoDeBarras),
+          new Text("Valor Total: " + billInfo.value.valorTotal),
+          new Text("Data de Vencimento: " + billInfo.value.dataVencimento),
+          new Text("Pagador: " + billInfo.value.nomePagador),
+        ],
+      ),
+    );
+  }
+
   _cardProfile() {
     return Card(
       child: ListTile(
@@ -88,26 +107,29 @@ class _ContainerPageState extends State<ContainerPage> {
       ),
     );
   }
+
   _cardMyAccount() {
-    return  Card(
+    return Card(
       child: ListTile(
-        leading: Icon(Icons.account_circle, color: Color(0xff0f3666)),
+        leading: Icon(Icons.account_circle, color: Color(Consts.PRIMARY_BLUE_COLOR)),
         title: Text('Meu Perfil'),
       ),
     );
   }
+
   _cardMyOrders() {
-    return    Card(
+    return Card(
       child: ListTile(
-        leading: Icon(Icons.shopping_cart, color: Color(0xff0f3666)),
+        leading: Icon(Icons.shopping_cart, color: Color(Consts.PRIMARY_BLUE_COLOR)),
         title: Text('Meus Pedidos'),
       ),
     );
   }
-  _cardSignout(){
+
+  _cardSignout() {
     return Card(
       child: ListTile(
-          leading: Icon(Icons.exit_to_app, color: Color(0xff0f3666)),
+          leading: Icon(Icons.exit_to_app, color: Color(Consts.PRIMARY_BLUE_COLOR)),
           title: Text('Sair'),
           onTap: () {
             signOut();
@@ -117,22 +139,21 @@ class _ContainerPageState extends State<ContainerPage> {
 
   signOut() {
     streamController.add(AuthenticationState.signedOut());
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => LoginPage()));
-
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => LoginPage()));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xff0f3666),
+        backgroundColor: Color(Consts.PRIMARY_BLUE_COLOR),
       ),
       body: Center(
           child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[Expanded(child: _cardBarcode())],
+        children: <Widget>[Expanded(child: _barcodeReader())],
       )),
       drawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
@@ -158,11 +179,5 @@ class _ContainerPageState extends State<ContainerPage> {
         ),
       ),
     );
-  }
-
-  _billsInfo() {
-    if (resp != null) {
-      return new Text("Motivo : " + resp?.value?.motivo);
-    }
   }
 }

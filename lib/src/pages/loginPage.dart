@@ -4,8 +4,8 @@ import 'package:FlexPay/src/component/customDialog.dart';
 import 'package:FlexPay/src/pages/container.dart';
 import 'package:FlexPay/src/pages/forgotPassword.dart';
 import 'package:FlexPay/src/pages/signup.dart';
+import 'package:FlexPay/src/service/auth/authService.dart';
 import 'package:FlexPay/src/service/auth/authentication_state.dart';
-import 'package:FlexPay/src/service/authService.dart';
 import 'package:FlexPay/src/util/consts.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
@@ -20,8 +20,6 @@ class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title}) : super(key: key);
   final String title;
 
-
-
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -29,34 +27,15 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final AuthService authService = new AuthService();
   var geolocator = Geolocator();
-  var locationOptions = LocationOptions(accuracy: LocationAccuracy.high, distanceFilter: 10);
-  final StreamController<AuthenticationState> streamController = new StreamController();
+  var locationOptions =
+      LocationOptions(accuracy: LocationAccuracy.high, distanceFilter: 10);
+  final StreamController<AuthenticationState> streamController =
+      new StreamController();
 
   signIn() async {
     streamController.add(AuthenticationState.authenticated());
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => ContainerPage()));
-  }
-
-  Widget _backButton() {
-    return InkWell(
-      onTap: () {
-        Navigator.pop(context);
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Row(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
-              child: Icon(Icons.keyboard_arrow_left, color: Colors.black),
-            ),
-            Text('Voltar',
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500))
-          ],
-        ),
-      ),
-    );
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => ContainerPage()));
   }
 
   Widget _forgotPasswordButton() {
@@ -66,11 +45,11 @@ class _LoginPageState extends State<LoginPage> {
             MaterialPageRoute(builder: (context) => ForgotPasswordPage()));
       },
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10),
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
         child: Row(
           children: <Widget>[
             Align(
-              alignment: Alignment.centerRight,
+              alignment: Alignment.center,
             ),
             Text('Esqueceu  a senha?',
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
@@ -123,18 +102,14 @@ class _LoginPageState extends State<LoginPage> {
           authService
               .login(emailController, passwordController)
               .then((value) => signIn())
-              .catchError((error) =>
-            showDialog(
-                context: context,
-                builder: (BuildContext context) => CustomDialog(
-                  title: "",
-                  description:
-                  "Usuário e/ou Senha não encontrados",
-                  buttonText: "Fechar",
-                ),
-              )
-
-          );
+              .catchError((error) => showDialog(
+                    context: context,
+                    builder: (BuildContext context) => CustomDialog(
+                      title: "",
+                      description: "Usuário e/ou Senha não encontrados",
+                      buttonText: "Fechar",
+                    ),
+                  ));
         },
         child: Container(
           width: MediaQuery.of(context).size.width,
@@ -152,7 +127,7 @@ class _LoginPageState extends State<LoginPage> {
               gradient: LinearGradient(
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
-                  colors: [Color(0xff2a508e), Color(0xff0f3666)])),
+                  colors: [Color(Consts.SECONDARY_BLUE_COLOR), Color(Consts.PRIMARY_BLUE_COLOR)])),
           child: Text(
             'Login',
             style: TextStyle(fontSize: 20, color: Colors.white),
@@ -176,7 +151,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
           ),
-          Text('or'),
+          Text('ou'),
           Expanded(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),
@@ -196,7 +171,50 @@ class _LoginPageState extends State<LoginPage> {
   Widget _facebookButton() {
     return Container(
       height: 50,
-      margin: EdgeInsets.symmetric(vertical: 20),
+      margin: EdgeInsets.symmetric(vertical: 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+      ),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            flex: 1,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Color(Consts.PRIMARY_BLUE_COLOR),
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(5),
+                    topLeft: Radius.circular(5)),
+              ),
+              alignment: Alignment.center,
+              child: Image.asset('assets/images/logo.png'), //TODO: Colocar logo facebook
+            ),
+          ),
+          Expanded(
+            flex: 5,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Color(Consts.PRIMARY_BLUE_COLOR),
+                borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(5),
+                    topRight: Radius.circular(5)),
+              ),
+              alignment: Alignment.center,
+              child: Text('Entrar com Facebook',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400)),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _googleButton() {
+    return Container(
+      height: 50,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
@@ -212,24 +230,20 @@ class _LoginPageState extends State<LoginPage> {
                     topLeft: Radius.circular(5)),
               ),
               alignment: Alignment.center,
-              child: Text('f',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w400)),
+              child: Image.asset('assets/images/logo.png'), //TODO: Colocar logo google
             ),
           ),
           Expanded(
             flex: 5,
             child: Container(
               decoration: BoxDecoration(
-                color: Color(0xff0f3666),
+                color: Color(0xffe46b10),
                 borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(5),
                     topRight: Radius.circular(5)),
               ),
               alignment: Alignment.center,
-              child: Text('Log in with Facebook',
+              child: Text('Entrar com Google',
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,
@@ -263,7 +277,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Text(
               'Cadastre-se',
               style: TextStyle(
-                  color: Color(0xff2a508e),
+                  color: Color(Consts.SECONDARY_BLUE_COLOR),
                   fontSize: 13,
                   fontWeight: FontWeight.w600),
             ),
@@ -273,7 +287,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _title() {
+  Widget _logo() {
     return Image.asset('assets/images/logo.png');
   }
 
@@ -287,16 +301,17 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _location() async {
-     Position position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-     print(position.latitude);
-     print(position.longitude);
-     var addresses;
-     // From coordinates
-     final coordinates = new Coordinates(position.latitude, position.longitude);
-     addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
-     var first = addresses.first;
-     first = addresses.first;
-     print("${first.featureName} : ${first.addressLine}");
+    Position position = await Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    print(position.latitude);
+    print(position.longitude);
+    var addresses;
+    // From coordinates
+    final coordinates = new Coordinates(position.latitude, position.longitude);
+    addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
+    var first = addresses.first;
+    first = addresses.first;
+    print("${first.featureName} : ${first.addressLine}");
   }
 
   @override
@@ -318,7 +333,7 @@ class _LoginPageState extends State<LoginPage> {
                   flex: 3,
                   child: SizedBox(),
                 ),
-                _title(),
+                _logo(),
                 SizedBox(
                   height: 50,
                 ),
@@ -330,6 +345,7 @@ class _LoginPageState extends State<LoginPage> {
                 _forgotPasswordButton(),
                 _divider(),
                 _facebookButton(),
+                _googleButton(),
                 Expanded(
                   flex: 2,
                   child: SizedBox(),
@@ -341,7 +357,6 @@ class _LoginPageState extends State<LoginPage> {
             alignment: Alignment.bottomCenter,
             child: _createAccountLabel(),
           ),
-          Positioned(top: 40, left: 0, child: _backButton()),
         ],
       ),
     )));

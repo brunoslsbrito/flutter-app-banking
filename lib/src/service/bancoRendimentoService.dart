@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:FlexPay/src/model/bancoRendimento/responseBillInfo.dart';
+import 'package:FlexPay/src/util/consts.dart';
 import 'package:http/http.dart';
 
 class BancoRendimentoService {
@@ -9,7 +10,7 @@ class BancoRendimentoService {
     Map<String, String> headers = {
       "Content-type": "application/json",
     };
-    final String URL = 'http://rendimentoapi.flexpag.com:9997/api/pagamento/info-boleto';
+    final String URL =  Consts.HOST_BANCO_RENDIMENTO + 'pagamento/info-boleto';
     String body = '{"codigoBarras": "", "linhaDigitavel": "' + barcode +  '","numeroDocumento": "","dataVencimento": ""}';
     Response response = await post(URL, headers: headers, body: body);
 

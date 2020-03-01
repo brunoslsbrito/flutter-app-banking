@@ -1,9 +1,7 @@
-import 'dart:async';
-
 import 'package:FlexPay/src/pages/loginPage.dart';
 import 'package:FlexPay/src/pages/signup.dart';
 import 'package:FlexPay/src/service/auth/authentication_state.dart';
-import 'package:FlexPay/src/service/localAuthenticationService.dart';
+import 'package:FlexPay/src/util/consts.dart';
 import 'package:flutter/material.dart';
 
 class WelcomePage extends StatefulWidget {
@@ -16,8 +14,6 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage> {
-  final StreamController<AuthenticationState> _streamController =
-  new StreamController<AuthenticationState>();
 
   Widget buildUi(BuildContext context, AuthenticationState s) {
     if (s.authenticated) {
@@ -42,7 +38,7 @@ class _WelcomePageState extends State<WelcomePage> {
             borderRadius: BorderRadius.all(Radius.circular(5)),
             boxShadow: <BoxShadow>[
               BoxShadow(
-                  color: Color(0xff2a508e).withAlpha(100),
+                  color: Color(Consts.SECONDARY_BLUE_COLOR).withAlpha(100),
                   offset: Offset(2, 4),
                   blurRadius: 8,
                   spreadRadius: 2)
@@ -50,7 +46,7 @@ class _WelcomePageState extends State<WelcomePage> {
             color: Colors.white),
         child: Text(
           'Login',
-          style: TextStyle(fontSize: 20, color: Color(0xff2a508e)),
+          style: TextStyle(fontSize: 20, color: Color(Consts.SECONDARY_BLUE_COLOR)),
         ),
       ),
     );
@@ -79,7 +75,6 @@ class _WelcomePageState extends State<WelcomePage> {
   }
 
   Widget _label() {
-    LocalAuthenticationService _localAuth = new LocalAuthenticationService();
     return
       GestureDetector(
         onTap: () {
@@ -136,7 +131,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [Color(0xffffffff), Color(0xff2a508e)])),
+                    colors: [Color(0xffffffff), Color(Consts.SECONDARY_BLUE_COLOR)])),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
