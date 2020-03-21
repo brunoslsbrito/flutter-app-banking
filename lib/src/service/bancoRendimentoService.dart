@@ -11,7 +11,7 @@ class BancoRendimentoService {
       "Content-type": "application/json",
     };
     final String URL =  Consts.HOST_BANCO_RENDIMENTO + 'pagamento/info-boleto';
-    String body = '{"codigoBarras": "", "linhaDigitavel": "' + barcode +  '","numeroDocumento": "","dataVencimento": ""}';
+    String body = '{"codigoBarras": "", "linhaDigitavel": "10499593883700010004200000713180981900000091588","numeroDocumento": "","dataVencimento": ""}';
     Response response = await post(URL, headers: headers, body: body);
 
     print(response.statusCode);

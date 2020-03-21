@@ -187,7 +187,11 @@ class _LoginPageState extends State<LoginPage> {
                     topLeft: Radius.circular(5)),
               ),
               alignment: Alignment.center,
-              child: Image.asset('assets/images/logo.png'), //TODO: Colocar logo facebook
+              child: Text('f',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 25,
+                      fontWeight: FontWeight.w400)),
             ),
           ),
           Expanded(
@@ -224,20 +228,20 @@ class _LoginPageState extends State<LoginPage> {
             flex: 1,
             child: Container(
               decoration: BoxDecoration(
-                color: Color(0xff1959a9),
+                color: Color(0xffd51919),
                 borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(5),
                     topLeft: Radius.circular(5)),
               ),
               alignment: Alignment.center,
-              child: Image.asset('assets/images/logo.png'), //TODO: Colocar logo google
+              child: Icon(Icons.mail_outline, color: Colors.white), //TODO: Colocar logo google
             ),
           ),
           Expanded(
             flex: 5,
             child: Container(
               decoration: BoxDecoration(
-                color: Color(0xffe46b10),
+                color: Color(0xffD10000),
                 borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(5),
                     topRight: Radius.circular(5)),
