@@ -3,12 +3,15 @@ import 'dart:async';
 import 'package:FlexPay/src/component/customDialog.dart';
 import 'package:FlexPay/src/model/bancoRendimento/responseBillInfo.dart';
 import 'package:FlexPay/src/pages/loginPage.dart';
+import 'package:FlexPay/src/pages/transaction.dart';
 import 'package:FlexPay/src/service/auth/authentication_state.dart';
 import 'package:FlexPay/src/service/bancoRendimentoService.dart';
 import 'package:FlexPay/src/util/consts.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import 'dashboard.dart';
 
 class ContainerPage extends StatefulWidget {
   ContainerPage({Key key}) : super(key: key);
@@ -89,7 +92,8 @@ class _ContainerPageState extends State<ContainerPage> {
           new Text("Cedente: " + billInfo.value.nomeBeneficiario),
           new Text("Còdigo de Barras: " + billInfo.value.codigoDeBarras),
           new Text("Valor Total: " + billInfo.value.valorTotal.toString()),
-          new Text("Data de Vencimento: " + billInfo.value.dataVencimento.toString()),
+          new Text("Data de Vencimento: " +
+              billInfo.value.dataVencimento.toString()),
           new Text("Pagador: " + billInfo.value.nomePagador),
         ],
       ),
@@ -111,16 +115,43 @@ class _ContainerPageState extends State<ContainerPage> {
   _cardMyAccount() {
     return Card(
       child: ListTile(
-        leading: Icon(Icons.account_circle, color: Color(Consts.PRIMARY_BLUE_COLOR)),
+        leading:
+            Icon(Icons.account_circle, color: Color(Consts.PRIMARY_BLUE_COLOR)),
         title: Text('Meu Perfil'),
       ),
+    );
+  }
+
+  _cardDashboard() {
+    return Card(
+      child: ListTile(
+          leading:
+              Icon(Icons.dashboard, color: Color(Consts.PRIMARY_BLUE_COLOR)),
+          title: Text('Dashboard'),
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => Dashboard.withSampleData()));
+          }),
+    );
+  }
+  _cardTransactions() {
+    return Card(
+      child: ListTile(
+          leading:
+              Icon(Icons.view_list, color: Color(Consts.PRIMARY_BLUE_COLOR)),
+          title: Text('Transações'),
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => Transaction()));
+          }),
     );
   }
 
   _cardMyOrders() {
     return Card(
       child: ListTile(
-        leading: Icon(Icons.shopping_cart, color: Color(Consts.PRIMARY_BLUE_COLOR)),
+        leading:
+            Icon(Icons.shopping_cart, color: Color(Consts.PRIMARY_BLUE_COLOR)),
         title: Text('Meus Pedidos'),
       ),
     );
@@ -129,7 +160,8 @@ class _ContainerPageState extends State<ContainerPage> {
   _cardSignout() {
     return Card(
       child: ListTile(
-          leading: Icon(Icons.exit_to_app, color: Color(Consts.PRIMARY_BLUE_COLOR)),
+          leading:
+              Icon(Icons.exit_to_app, color: Color(Consts.PRIMARY_BLUE_COLOR)),
           title: Text('Sair'),
           onTap: () {
             signOut();
@@ -173,8 +205,10 @@ class _ContainerPageState extends State<ContainerPage> {
             ),
             _cardProfile(),
             _cardMyAccount(),
+            _cardDashboard(),
+            _cardTransactions(),
             _cardMyOrders(),
-            _cardSignout()
+            _cardSignout(),
           ],
         ),
       ),
