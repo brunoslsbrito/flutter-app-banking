@@ -11,8 +11,6 @@ import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'dashboard.dart';
-
 class ContainerPage extends StatefulWidget {
   ContainerPage({Key key}) : super(key: key);
 
@@ -129,8 +127,8 @@ class _ContainerPageState extends State<ContainerPage> {
               Icon(Icons.dashboard, color: Color(Consts.PRIMARY_BLUE_COLOR)),
           title: Text('Dashboard'),
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => Dashboard.withSampleData()));
+//            Navigator.push(context,
+//                MaterialPageRoute(builder: (context) => Dashboard.withSampleData()));
           }),
     );
   }
@@ -185,7 +183,7 @@ class _ContainerPageState extends State<ContainerPage> {
           child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[Expanded(child: _barcodeReader())],
+//        children: <Widget>[Expanded(child: _barcodeReader())],
       )),
       drawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll

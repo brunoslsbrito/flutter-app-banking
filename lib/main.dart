@@ -13,14 +13,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'FlexPay - Flexpag',
       theme: ThemeData(
+//        brightness: Brightness.dark,
         primarySwatch: Colors.indigo,
         textTheme: GoogleFonts.latoTextTheme(textTheme).copyWith(
           body1: GoogleFonts.roboto(textStyle: textTheme.body1),
         ),
       ),
-      debugShowCheckedModeBanner: false,
       home: HomePage(),
     );
   }

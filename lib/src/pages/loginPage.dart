@@ -1,9 +1,8 @@
 import 'dart:async';
 
-import 'package:FlexPay/src/component/customDialog.dart';
-import 'package:FlexPay/src/pages/container.dart';
 import 'package:FlexPay/src/pages/forgotPassword.dart';
 import 'package:FlexPay/src/pages/signup.dart';
+import 'package:FlexPay/src/pages/transaction.dart';
 import 'package:FlexPay/src/service/auth/authService.dart';
 import 'package:FlexPay/src/service/auth/authentication_state.dart';
 import 'package:FlexPay/src/util/consts.dart';
@@ -35,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
   signIn() async {
     streamController.add(AuthenticationState.authenticated());
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => ContainerPage()));
+        context, MaterialPageRoute(builder: (context) => Transaction()));
   }
 
   Widget _forgotPasswordButton() {
@@ -99,17 +98,18 @@ class _LoginPageState extends State<LoginPage> {
   Widget _submitButton() {
     return InkWell(
         onTap: () {
-          authService
-              .login(emailController, passwordController)
-              .then((value) => signIn())
-              .catchError((error) => showDialog(
-                    context: context,
-                    builder: (BuildContext context) => CustomDialog(
-                      title: "",
-                      description: "Usuário e/ou Senha não encontrados",
-                      buttonText: "Fechar",
-                    ),
-                  ));
+//          authService
+//              .login(emailController, passwordController)
+//              .then((value) => signIn())
+//              .catchError((error) => showDialog(
+//                    context: context,
+//                    builder: (BuildContext context) => CustomDialog(
+//                      title: "",
+//                      description: "Usuário e/ou Senha não encontrados",
+//                      buttonText: "Fechar",
+//                    ),
+//                  ));
+          signIn();
         },
         child: Container(
           width: MediaQuery.of(context).size.width,
