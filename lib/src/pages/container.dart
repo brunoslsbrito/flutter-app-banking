@@ -11,6 +11,9 @@ import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'dashboard.dart';
+import 'myAccount.dart';
+
 class ContainerPage extends StatefulWidget {
   ContainerPage({Key key}) : super(key: key);
 
@@ -103,7 +106,7 @@ class _ContainerPageState extends State<ContainerPage> {
       child: ListTile(
         leading: CircleAvatar(
             backgroundImage: NetworkImage(
-                'https://media-exp1.licdn.com/dms/image/C4D03AQEeea6DPn5mvg/profile-displayphoto-shrink_100_100/0?e=1588204800&v=beta&t=3nm8yRQ-2oqrb8p15zK3RRRfMDcvUIsTlB5afpGcQOs')),
+                'https://media-exp1.licdn.com/dms/image/C4E03AQHs2MfF-5Gv3g/profile-displayphoto-shrink_200_200/0?e=1595462400&v=beta&t=4rXsCw5aDca1WP-nKq7Mg1mKlUE25GcD7EmNJl16KgI')),
         title: Text('Bruno Brito'),
         subtitle: Text('bruno.brito@flexpag.com'),
       ),
@@ -116,8 +119,11 @@ class _ContainerPageState extends State<ContainerPage> {
         leading:
             Icon(Icons.account_circle, color: Color(Consts.PRIMARY_BLUE_COLOR)),
         title: Text('Meu Perfil'),
-      ),
-    );
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => MyAccount()));
+          }),
+      );
   }
 
   _cardDashboard() {
@@ -127,8 +133,8 @@ class _ContainerPageState extends State<ContainerPage> {
               Icon(Icons.dashboard, color: Color(Consts.PRIMARY_BLUE_COLOR)),
           title: Text('Dashboard'),
           onTap: () {
-//            Navigator.push(context,
-//                MaterialPageRoute(builder: (context) => Dashboard.withSampleData()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => Dashboard()));
           }),
     );
   }

@@ -38,7 +38,7 @@ class _MyAccountState extends State<MyAccount> {
                 ),
                 CircleAvatar(
                   backgroundImage: NetworkImage(
-                      'https://media-exp1.licdn.com/dms/image/C4E03AQHs2MfF-5Gv3g/profile-displayphoto-shrink_200_200/0?e=1595462400&v=beta&t=4rXsCw5aDca1WP-nKq7Mg1mKlUE25GcD7EmNJl16KgI'),
+                      'https://image.freepik.com/vetores-gratis/perfil-de-avatar-de-homem-no-icone-redondo_24640-14044.jpg'),
                 ),
               ],
             ),

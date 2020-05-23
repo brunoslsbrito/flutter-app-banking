@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:FlexPay/src/pages/forgotPassword.dart';
 import 'package:FlexPay/src/pages/signup.dart';
-import 'package:FlexPay/src/pages/transaction.dart';
 import 'package:FlexPay/src/service/auth/authService.dart';
 import 'package:FlexPay/src/service/auth/authentication_state.dart';
 import 'package:FlexPay/src/util/consts.dart';
@@ -10,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 
+import 'container.dart';
 import 'forgotPassword.dart';
 
 TextEditingController emailController = new TextEditingController();
@@ -34,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
   signIn() async {
     streamController.add(AuthenticationState.authenticated());
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => Transaction()));
+        context, MaterialPageRoute(builder: (context) => ContainerPage()));
   }
 
   Widget _forgotPasswordButton() {
