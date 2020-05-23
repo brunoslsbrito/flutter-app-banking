@@ -39,7 +39,7 @@ class OperationChart extends StatelessWidget {
 
 class TransactionSeries {
   final String month;
-  final int value;
+  final double value;
   final charts.Color barColor;
 
   TransactionSeries(

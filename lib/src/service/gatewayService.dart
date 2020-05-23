@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:FlexPay/src/model/dto/gateway/fetchPaymentsByDateDTO.dart';
+import 'package:FlexPay/src/model/dto/gateway/movimentMonthlyDTO.dart';
 import 'package:FlexPay/src/model/dto/gateway/paymentGatewayDTO.dart';
 import 'package:FlexPay/src/util/consts.dart';
 import 'package:http/http.dart';
@@ -23,6 +24,23 @@ class GatewayService {
       // If the server did not return a 200 OK response, then throw an exception.
       throw Exception('Ops! Aconteceu algum problema');
     }
+  }
+  Future<MovimentMonthlyDTO> fetchMovimentMonthly() async {
+    Map<String, String> headers = {"Content-type": "application/json"};
+    final String uri = Consts.HOST_ERP_PAYMENT_BACKEND + 'payment/fetchOperationMonthly';
+    Response response = await get(uri, headers: headers);
+
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response, then parse the JSON.
+      return parseMoviment(response.body);
+    } else {
+      // If the server did not return a 200 OK response, then throw an exception.
+      throw Exception('Ops! Aconteceu algum problema');
+    }
+  }
+
+  MovimentMonthlyDTO parseMoviment(String responseBody) {
+    return MovimentMonthlyDTO.fromJson(json.decode(responseBody));
   }
 
   PaymentGatewayDTO parseTransaction(String responseBody) {
