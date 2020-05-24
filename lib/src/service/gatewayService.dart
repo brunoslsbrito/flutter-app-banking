@@ -22,7 +22,7 @@ class GatewayService {
       return parseTransaction(response.body);
     } else {
       // If the server did not return a 200 OK response, then throw an exception.
-      throw Exception('Ops! Aconteceu algum problema');
+      throw Exception('Não foi possível carregar as transações.');
     }
   }
   Future<MovimentMonthlyDTO> fetchMovimentMonthly() async {

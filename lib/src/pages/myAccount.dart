@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:FlexPay/src/model/accountItemList.dart';
+import 'package:FlexPay/src/util/consts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -24,27 +25,23 @@ class _MyAccountState extends State<MyAccount> {
         alignment: Alignment.topCenter,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(top: 50, left: 30, right: 30),
+            padding: const EdgeInsets.only(top: 20, left: 30, right: 30),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Icon(Feather.grid),
                 Text(
                   'Minha Conta',
                   style: GoogleFonts.kodchasan().copyWith(
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: Colors.grey[800],
                       fontSize: 21),
                 ),
-                CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      'https://image.freepik.com/vetores-gratis/perfil-de-avatar-de-homem-no-icone-redondo_24640-14044.jpg'),
-                ),
+                CircleAvatar(child: Image.asset('assets/images/profile.png')),
               ],
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 130, left: 30, right: 30),
+            padding: const EdgeInsets.only(top: 110, left: 30, right: 30),
             child: Column(
               children: <Widget>[
                 AnimatedContainer(
@@ -85,7 +82,7 @@ class _MyAccountState extends State<MyAccount> {
                             ),
                             Text('Arraste para cima para esconder o número',
                                 style: GoogleFonts.lato().copyWith(
-                                    color: Colors.grey[400], fontSize: 12)),
+                                    color: Colors.grey[600], fontSize: 12)),
                           ],
                         ),
                       )
@@ -110,40 +107,32 @@ class _MyAccountState extends State<MyAccount> {
                   height: 20,
                 ),
                 Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Transações',
-                    style: GoogleFonts.kodchasan().copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontSize: 21),
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: 10),
+                    child: ProgressButton.icon(
+                        radius: 100.0,
+                        iconedButtons: {
+                          ButtonState.idle: IconedButton(
+                              text: "Atualizar",
+                              icon: Icon(Icons.refresh, color: Colors.white),
+                              color: Colors.indigo.shade500),
+                          ButtonState.loading: IconedButton(
+                              text: "Loading", color: Colors.indigo.shade700),
+                          ButtonState.fail: IconedButton(
+                              text: "Failed",
+                              icon: Icon(Icons.cancel, color: Colors.white),
+                              color: Colors.red.shade300),
+                          ButtonState.success: IconedButton(
+                              text: "Success",
+                              icon: Icon(
+                                Icons.check_circle,
+                                color: Colors.white,
+                              ),
+                              color: Colors.green.shade400)
+                        },
+                        onPressed: onPressedIconWithText,
+                        state: stateTextWithIcon),
                   ),
-                ),
-
-                Align(
-                  child: ProgressButton.icon(
-                      radius: 100.0,
-                      iconedButtons: {
-                        ButtonState.idle: IconedButton(
-                            text: "Atualizar",
-                            icon: Icon(Icons.refresh, color: Colors.white),
-                            color: Colors.indigo.shade500),
-                        ButtonState.loading: IconedButton(
-                            text: "Loading", color: Colors.indigo.shade700),
-                        ButtonState.fail: IconedButton(
-                            text: "Failed",
-                            icon: Icon(Icons.cancel, color: Colors.white),
-                            color: Colors.red.shade300),
-                        ButtonState.success: IconedButton(
-                            text: "Success",
-                            icon: Icon(
-                              Icons.check_circle,
-                              color: Colors.white,
-                            ),
-                            color: Colors.green.shade400)
-                      },
-                      onPressed: onPressedIconWithText,
-                      state: stateTextWithIcon),
                 )
               ],
             ),
@@ -153,11 +142,11 @@ class _MyAccountState extends State<MyAccount> {
             curve: Curves.elasticOut,
             right: 50,
             child: AnimatedPadding(
-              padding: EdgeInsets.only(top: 130 + _progressSlideSheet * 21),
+              padding: EdgeInsets.only(top: 110 + _progressSlideSheet * 21),
               duration: Duration(milliseconds: 500),
               curve: Curves.elasticOut,
-              child: Image.network(
-                'https://www.zzlocal.com/images/visa-logo-black-and-white.png',
+              child: Image.asset(
+                'assets/images/visa-logo-black-and-white.png',
                 height: 80,
                 width: 80,
               ),
@@ -171,11 +160,11 @@ class _MyAccountState extends State<MyAccount> {
               opacity: 1 - _progressSlideSheet,
               duration: Duration(milliseconds: 50),
               child: AnimatedPadding(
-                padding: EdgeInsets.only(top: 150),
+                padding: EdgeInsets.only(top: 180),
                 duration: Duration(milliseconds: 500),
                 curve: Curves.elasticOut,
-                child: Image.network(
-                  'https://img.icons8.com/cotton/2x/sim-card-chip.png',
+                child: Image.asset(
+                  'assets/images/sim-card-chip.png',
                   height: 40,
                   width: 40,
                 ),
@@ -187,19 +176,17 @@ class _MyAccountState extends State<MyAccount> {
             curve: Curves.elasticOut,
             left: 50,
             child: AnimatedOpacity(
-              duration: Duration(milliseconds: 50),
               opacity: 1 - _progressSlideSheet,
+              duration: Duration(milliseconds: 50),
               child: AnimatedPadding(
-                padding: EdgeInsets.only(top: 220),
+                padding: EdgeInsets.only(top: 170, left: 50),
                 duration: Duration(milliseconds: 500),
                 curve: Curves.elasticOut,
-                child: Text(
-                  '1535    1518    1996    1885',
-                  style: GoogleFonts.lato().copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      fontSize: 16),
-                ),
+                child: Text('BRUNO S BRITO',
+                    style: GoogleFonts.lato().copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 16)),
               ),
             ),
           ),
@@ -207,26 +194,49 @@ class _MyAccountState extends State<MyAccount> {
             duration: Duration(milliseconds: 500),
             curve: Curves.elasticOut,
             left: 50,
-            child: AnimatedPadding(
-              padding: EdgeInsets.only(top: 255 - _progressSlideSheet * 80),
-              duration: Duration(milliseconds: 500),
-              curve: Curves.elasticOut,
-              child: Text(
-                ' 245,00',
-                style: GoogleFonts.lato().copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    fontSize: 28),
-              ),
-            ),
+            child: AnimatedOpacity(
+                duration: Duration(milliseconds: 50),
+                opacity: 1 - _progressSlideSheet,
+                child: AnimatedPadding(
+                  padding: EdgeInsets.only(top: 210, left: 50),
+                  duration: Duration(milliseconds: 500),
+                  curve: Curves.elasticOut,
+                  child: Text(
+                    '1535    1518    1996    1885',
+                    style: GoogleFonts.lato().copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 16),
+                  ),
+                )),
           ),
+//          AnimatedPositioned(
+//            duration: Duration(milliseconds: 500),
+//            curve: Curves.elasticOut,
+//            left: 50,
+//            child: AnimatedPadding(
+//              padding: EdgeInsets.only(
+//                  top: 235 - _progressSlideSheet * 80,
+//                  left: 220 - _progressSlideSheet * 180,
+//                  right: 10),
+//              duration: Duration(milliseconds: 500),
+//              curve: Curves.elasticOut,
+//              child: Text(
+//                'R\$245,00',
+//                style: GoogleFonts.lato().copyWith(
+//                    fontWeight: FontWeight.bold,
+//                    color: Colors.white,
+//                    fontSize: 22),
+//              ),
+//            ),
+//          ),
           SlidingSheet(
             listener: (state) {
               setState(() {
                 _progressSlideSheet = state.progress;
               });
             },
-            color: Colors.grey[800],
+            color: Color(Consts.PRIMARY_BLUE_COLOR),
             elevation: 10,
             cornerRadius: 20,
             closeOnBackdropTap: true,
@@ -239,7 +249,7 @@ class _MyAccountState extends State<MyAccount> {
             ),
             builder: (context, state) {
               return Container(
-                color: Colors.grey[800],
+                color: Color(Consts.SECONDARY_BLUE_COLOR),
                 height: MediaQuery.of(context).size.height / 2,
                 child: Column(
                   children: <Widget>[

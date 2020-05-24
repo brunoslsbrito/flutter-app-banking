@@ -73,13 +73,9 @@ class _TransactionState extends State<Transaction> {
           itemCount: _transactions?.length ?? 0,
           firstRowIndex: _rowsOffset,
           handleNext: () async {
+            fetchTransactions();
             setState(() {
               _rowsOffset += _rowsPerPage;
-            });
-
-            await new Future.delayed(new Duration(seconds: 3));
-            setState(() {
-              fetchTransactions();
             });
           },
           handlePrevious: () {
@@ -98,7 +94,9 @@ class _TransactionState extends State<Transaction> {
                       transactionModel.status == 2
                           ? Icon(Feather.check, color: Colors.green)
                           : Icon(Feather.x_circle, color: Colors.red),
-                      Padding(
+                      AnimatedPadding(
+                        duration: Duration(seconds: 2),
+                        curve: Curves.easeInOutBack,
                         padding: EdgeInsets.only(left: 16.0),
                         child: Text('${transactionModel.uid.substring(0,6)}',
                             style: GoogleFonts.lato().copyWith(
@@ -106,7 +104,9 @@ class _TransactionState extends State<Transaction> {
                                 color: Colors.black,
                                 fontSize: 16)),
                       ),
-                      Padding(
+                      AnimatedPadding(
+                        duration: Duration(seconds: 2),
+                        curve: Curves.easeInOutBack,
                         padding: EdgeInsets.only(left: 16.0),
                         child: Text(mountAmount(transactionModel.amount),
                             style: GoogleFonts.lato().copyWith(
@@ -114,7 +114,9 @@ class _TransactionState extends State<Transaction> {
                                 color: Colors.black,
                                 fontSize: 16)),
                       ),
-                      Padding(
+                      AnimatedPadding(
+                        duration: Duration(seconds: 2),
+                        curve: Curves.easeInOutBack,
                         padding: EdgeInsets.only(left: 10.0),
                         child: Text('$_merchant ',
                             style: GoogleFonts.lato().copyWith(
@@ -122,7 +124,9 @@ class _TransactionState extends State<Transaction> {
                                 color: Colors.black,
                                 fontSize: 16)),
                       ),
-                      Padding(
+                      AnimatedPadding(
+                          duration: Duration(seconds: 2),
+                          curve: Curves.easeInOutBack,
                           padding: EdgeInsets.only(left: 16.0),
                           child: getBrand(transactionModel.cardId)),
                     ],
@@ -141,11 +145,7 @@ class _TransactionState extends State<Transaction> {
           sortColumnIndex: _sortColumnIndex,
           sortAscending: _sortAscending,
           onRefresh: () async {
-            await new Future.delayed(new Duration(seconds: 3));
-            setState(() {
-              fetchTransactions();
-            });
-            return null;
+            fetchTransactions();
           },
           onRowsPerPageChanged: (int value) {
             setState(() {
